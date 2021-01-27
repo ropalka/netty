@@ -16,15 +16,25 @@
 package io.netty.handler.codec.ajp;
 
 /**
- * Connection states.
+ * Protocol data types. All data types are using network byte order.
  */
-public enum ConnectionState {
+public enum AjpDataType {
     /**
-     * No request is being handled over this connection.
+     * A single byte.
      */
-    IDLE,
+    BYTE,
     /**
-     * The connecton is handling a specific request.
+     * A single byte, 1 = true, 0 = false.
      */
-    ASSIGNED
+    BOOLEAN,
+    /**
+     * A number in the range of 0 to 2^16. Stored in 2 bytes with the high-order byte first.
+     */
+    INTEGER,
+    /**
+     * A variable-sized string (length bounded by 2^16).
+     * Encoded with the length packed into two bytes first,
+     * followed by the string (including the terminating '\0').
+     */
+    STRING
 }

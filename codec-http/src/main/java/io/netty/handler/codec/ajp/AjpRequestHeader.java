@@ -21,7 +21,7 @@ import io.netty.util.AsciiString;
 /**
  * Encoded HTTP server request headers.
  */
-public enum RequestHeader {
+public enum AjpRequestHeader {
 
     ACCEPT(HttpHeaderNames.ACCEPT, 1),
     ACCEPT_CHARSET(HttpHeaderNames.ACCEPT_CHARSET, 2),
@@ -40,7 +40,7 @@ public enum RequestHeader {
 
     private final AsciiString header;
     private final int id;
-    private static final RequestHeader[] HEADERS = new RequestHeader[27];
+    private static final AjpRequestHeader[] HEADERS = new AjpRequestHeader[27];
 
     static {
         HEADERS[ACCEPT.id - 1] = ACCEPT;
@@ -64,7 +64,7 @@ public enum RequestHeader {
      * @param id the coded value
      * @return enum value of the server request header
      */
-    public static RequestHeader of(final int id) {
+    public static AjpRequestHeader of(final int id) {
         if (id < 1 || id > HEADERS.length) {
             throw new IllegalArgumentException();
         }
@@ -76,7 +76,7 @@ public enum RequestHeader {
      * @param header HTTP header
      * @param id code value
      */
-    RequestHeader(final AsciiString header, final int id) {
+    AjpRequestHeader(final AsciiString header, final int id) {
         this.header = header;
         this.id = id;
     }

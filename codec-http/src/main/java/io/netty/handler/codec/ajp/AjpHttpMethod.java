@@ -18,7 +18,7 @@ package io.netty.handler.codec.ajp;
 /**
  * Encoded HTTP methods.
  */
-public enum HttpMethod {
+public enum AjpHttpMethod {
     OPTIONS("OPTIONS", 1),
     GET("GET", 2),
     HEAD("HEAD", 3),
@@ -49,7 +49,7 @@ public enum HttpMethod {
 
     private final String method;
     private final int id;
-    private static final HttpMethod[] METHODS = new HttpMethod[27];
+    private static final AjpHttpMethod[] METHODS = new AjpHttpMethod[27];
 
     static {
         METHODS[OPTIONS.id - 1] = OPTIONS;
@@ -86,7 +86,7 @@ public enum HttpMethod {
      * @param id the coded value
      * @return enum value of the HTTP method
      */
-    public static HttpMethod of(final int id) {
+    public static AjpHttpMethod of(final int id) {
         if (id < 1 || id > METHODS.length) {
             throw new IllegalArgumentException();
         }
@@ -98,7 +98,7 @@ public enum HttpMethod {
      * @param method HTTP method
      * @param id code value
      */
-    HttpMethod(final String method, final int id) {
+    AjpHttpMethod(final String method, final int id) {
         this.method = method;
         this.id = id;
     }
