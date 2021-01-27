@@ -15,39 +15,41 @@
  */
 package io.netty.handler.codec.ajp;
 
+import io.netty.handler.codec.http.HttpMethod;
+
 /**
  * Encoded HTTP methods.
  */
 public enum AjpHttpMethod {
-    OPTIONS("OPTIONS", 1),
-    GET("GET", 2),
-    HEAD("HEAD", 3),
-    POST("POST", 4),
-    PUT("PUT", 5),
-    DELETE("DELETE", 6),
-    TRACE("TRACE", 7),
-    PROPFIND("PROPFIND", 8),
-    PROPPATCH("PROPPATCH", 9),
-    MKCOL("MKCOL", 10),
-    COPY("COPY", 11),
-    MOVE("MOVE", 12),
-    LOCK("LOCK", 13),
-    UNLOCK("UNLOCK", 14),
-    ACL("ACL", 15),
-    REPORT("REPORT", 16),
-    VERSION_CONTROL("VERSION-CONTROL", 17),
-    CHECKIN("CHECKIN", 18),
-    CHECKOUT("CHECKOUT", 19),
-    UNCHECKOUT("UNCHECKOUT", 20),
-    SEARCH("SEARCH", 21),
-    MKWORKSPACE("MKWORKSPACE", 22),
-    UPDATE("UPDATE", 23),
-    LABEL("LABEL", 24),
-    MERGE("MERGE", 25),
-    BASELINE_CONTROL("BASELINE_CONTROL", 26),
-    MKACTIVITY("MKACTIVITY", 27);
+    OPTIONS(HttpMethod.OPTIONS, 1),
+    GET(HttpMethod.GET, 2),
+    HEAD(HttpMethod.HEAD, 3),
+    POST(HttpMethod.POST, 4),
+    PUT(HttpMethod.PUT, 5),
+    DELETE(HttpMethod.DELETE, 6),
+    TRACE(HttpMethod.TRACE, 7),
+    PROPFIND(HttpMethod.valueOf("PROPFIND"), 8),
+    PROPPATCH(HttpMethod.valueOf("PROPPATCH"), 9),
+    MKCOL(HttpMethod.valueOf("MKCOL"), 10),
+    COPY(HttpMethod.valueOf("COPY"), 11),
+    MOVE(HttpMethod.valueOf("MOVE"), 12),
+    LOCK(HttpMethod.valueOf("LOCK"), 13),
+    UNLOCK(HttpMethod.valueOf("UNLOCK"), 14),
+    ACL(HttpMethod.valueOf("ACL"), 15),
+    REPORT(HttpMethod.valueOf("REPORT"), 16),
+    VERSION_CONTROL(HttpMethod.valueOf("VERSION-CONTROL"), 17),
+    CHECKIN(HttpMethod.valueOf("CHECKIN"), 18),
+    CHECKOUT(HttpMethod.valueOf("CHECKOUT"), 19),
+    UNCHECKOUT(HttpMethod.valueOf("UNCHECKOUT"), 20),
+    SEARCH(HttpMethod.valueOf("SEARCH"), 21),
+    MKWORKSPACE(HttpMethod.valueOf("MKWORKSPACE"), 22),
+    UPDATE(HttpMethod.valueOf("UPDATE"), 23),
+    LABEL(HttpMethod.valueOf("LABEL"), 24),
+    MERGE(HttpMethod.valueOf("MERGE"), 25),
+    BASELINE_CONTROL(HttpMethod.valueOf("BASELINE_CONTROL"), 26),
+    MKACTIVITY(HttpMethod.valueOf("MKACTIVITY"), 27);
 
-    private final String method;
+    private final HttpMethod method;
     private final int id;
     private static final AjpHttpMethod[] METHODS = new AjpHttpMethod[27];
 
@@ -98,7 +100,7 @@ public enum AjpHttpMethod {
      * @param method HTTP method
      * @param id code value
      */
-    AjpHttpMethod(final String method, final int id) {
+    AjpHttpMethod(final HttpMethod method, final int id) {
         this.method = method;
         this.id = id;
     }
@@ -107,7 +109,7 @@ public enum AjpHttpMethod {
      * Returns HTTP method.
      * @return HTTP method
      */
-    public final String getMethod() {
+    public final HttpMethod getMethod() {
         return method;
     }
 
@@ -125,6 +127,6 @@ public enum AjpHttpMethod {
      */
     @Override
     public final String toString() {
-        return method;
+        return method.toString();
     }
 }
