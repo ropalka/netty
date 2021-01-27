@@ -64,7 +64,7 @@ public enum AjpRequestHeader {
      * @param id the coded value
      * @return enum value of the server request header
      */
-    public static AjpRequestHeader of(final int id) {
+    public static AjpRequestHeader valueOf(final int id) {
         if (id < 1 || id > HEADERS.length) {
             throw new IllegalArgumentException();
         }

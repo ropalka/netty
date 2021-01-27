@@ -88,7 +88,7 @@ public enum AjpHttpMethod {
      * @param id the coded value
      * @return enum value of the HTTP method
      */
-    public static AjpHttpMethod of(final int id) {
+    public static AjpHttpMethod valueOf(final int id) {
         if (id < 1 || id > METHODS.length) {
             throw new IllegalArgumentException();
         }
