@@ -22,7 +22,6 @@ import io.netty.util.AsciiString;
  * Encoded web server request headers.
  */
 public enum AjpRequestHeader {
-
     ACCEPT(HttpHeaderNames.ACCEPT, 1),
     ACCEPT_CHARSET(HttpHeaderNames.ACCEPT_CHARSET, 2),
     ACCEPT_ENCODING(HttpHeaderNames.ACCEPT_ENCODING, 3),
