@@ -44,14 +44,57 @@ public enum HttpMethod {
     UPDATE("UPDATE", 23),
     LABEL("LABEL", 24),
     MERGE("MERGE", 25),
-    BASELINE_CONTRO("BASELINE_CONTRO", 26),
+    BASELINE_CONTROL("BASELINE_CONTROL", 26),
     MKACTIVITY("MKACTIVITY", 27);
 
     public final String method;
     public final int id;
+    private static final HttpMethod[] METHODS = new HttpMethod[27];
+
+    static {
+        METHODS[OPTIONS.id - 1] = OPTIONS;
+        METHODS[GET.id - 1] = GET;
+        METHODS[HEAD.id - 1] = HEAD;
+        METHODS[POST.id - 1] = POST;
+        METHODS[PUT.id - 1] = PUT;
+        METHODS[DELETE.id - 1] = DELETE;
+        METHODS[TRACE.id - 1] = TRACE;
+        METHODS[PROPFIND.id - 1] = PROPFIND;
+        METHODS[PROPPATCH.id - 1] = PROPPATCH;
+        METHODS[MKCOL.id - 1] = MKCOL;
+        METHODS[COPY.id - 1] = COPY;
+        METHODS[MOVE.id - 1] = MOVE;
+        METHODS[LOCK.id - 1] = LOCK;
+        METHODS[UNLOCK.id - 1] = UNLOCK;
+        METHODS[ACL.id - 1] = ACL;
+        METHODS[REPORT.id - 1] = REPORT;
+        METHODS[VERSION_CONTROL.id - 1] = VERSION_CONTROL;
+        METHODS[CHECKIN.id - 1] = CHECKIN;
+        METHODS[CHECKOUT.id - 1] = CHECKOUT;
+        METHODS[UNCHECKOUT.id - 1] = UNCHECKOUT;
+        METHODS[SEARCH.id - 1] = SEARCH;
+        METHODS[MKWORKSPACE.id - 1] = MKWORKSPACE;
+        METHODS[UPDATE.id - 1] = UPDATE;
+        METHODS[LABEL.id - 1] = LABEL;
+        METHODS[MERGE.id - 1] = MERGE;
+        METHODS[BASELINE_CONTROL.id - 1] = BASELINE_CONTROL;
+        METHODS[MKACTIVITY.id - 1] = MKACTIVITY;
+    }
 
     HttpMethod(final String method, final int id) {
         this.method = method;
         this.id = id;
+    }
+
+    /**
+     * Converts an AJP coded HTTP method to the enum.
+     * @param id the coded value
+     * @return enum value of the HTTP method
+     */
+    public static HttpMethod of(final int id) {
+        if (id < 1 || id > METHODS.length) {
+            throw new IllegalArgumentException();
+        }
+        return METHODS[id - 1];
     }
 }
