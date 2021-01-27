@@ -51,7 +51,7 @@ public enum AjpHttpMethod {
 
     private final HttpMethod method;
     private final int id;
-    private static final AjpHttpMethod[] METHODS = new AjpHttpMethod[27];
+    private static final AjpHttpMethod[] METHODS = new AjpHttpMethod[MKACTIVITY.ordinal() + 1];
 
     static {
         METHODS[OPTIONS.id - 1] = OPTIONS;

@@ -19,7 +19,7 @@ import io.netty.handler.codec.http.HttpHeaderNames;
 import io.netty.util.AsciiString;
 
 /**
- * Encoded HTTP server request headers.
+ * Encoded web server request headers.
  */
 public enum AjpRequestHeader {
 
@@ -40,7 +40,7 @@ public enum AjpRequestHeader {
 
     private final AsciiString header;
     private final int id;
-    private static final AjpRequestHeader[] HEADERS = new AjpRequestHeader[27];
+    private static final AjpRequestHeader[] HEADERS = new AjpRequestHeader[USER_AGENT.ordinal() + 1];
 
     static {
         HEADERS[ACCEPT.id - 1] = ACCEPT;
