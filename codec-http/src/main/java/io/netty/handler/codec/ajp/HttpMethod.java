@@ -16,7 +16,7 @@
 package io.netty.handler.codec.ajp;
 
 /**
- * HTTP methods.
+ * Encoded HTTP methods.
  */
 public enum HttpMethod {
     OPTIONS("OPTIONS", 1),
@@ -47,8 +47,8 @@ public enum HttpMethod {
     BASELINE_CONTROL("BASELINE_CONTROL", 26),
     MKACTIVITY("MKACTIVITY", 27);
 
-    public final String method;
-    public final int id;
+    private final String method;
+    private final int id;
     private static final HttpMethod[] METHODS = new HttpMethod[27];
 
     static {
@@ -81,11 +81,6 @@ public enum HttpMethod {
         METHODS[MKACTIVITY.id - 1] = MKACTIVITY;
     }
 
-    HttpMethod(final String method, final int id) {
-        this.method = method;
-        this.id = id;
-    }
-
     /**
      * Converts an AJP coded HTTP method to the enum.
      * @param id the coded value
@@ -96,5 +91,40 @@ public enum HttpMethod {
             throw new IllegalArgumentException();
         }
         return METHODS[id - 1];
+    }
+
+    /**
+     * Constructor.
+     * @param method HTTP method
+     * @param id code value
+     */
+    HttpMethod(final String method, final int id) {
+        this.method = method;
+        this.id = id;
+    }
+
+    /**
+     * Returns HTTP method.
+     * @return HTTP method
+     */
+    public final String getMethod() {
+        return method;
+    }
+
+    /**
+     * Returns code value.
+     * @return code value
+     */
+    public final int getId() {
+        return id;
+    }
+
+    /**
+     * String description of this enum.
+     * @return string description
+     */
+    @Override
+    public final String toString() {
+        return method;
     }
 }
