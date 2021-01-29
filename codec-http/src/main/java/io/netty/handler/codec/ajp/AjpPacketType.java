@@ -18,7 +18,7 @@ package io.netty.handler.codec.ajp;
 /**
  * Encoded packet types.
  */
-public enum AjpPacket {
+public enum AjpPacketType {
     DATA("Data", 1, true),
     FORWARD_REQUEST("Forward Request", 2, true),
     SEND_BODY_CHUNK("Send Body Chunk", 3, false),
@@ -33,7 +33,7 @@ public enum AjpPacket {
     private final String description;
     private final int id;
     private final boolean isWebServerPacket;
-    private static final AjpPacket[] PACKETS = new AjpPacket[CPING.ordinal() + 1];
+    private static final AjpPacketType[] PACKETS = new AjpPacketType[CPING.ordinal() + 1];
 
     static {
         PACKETS[DATA.id - 1] = DATA;
@@ -53,9 +53,9 @@ public enum AjpPacket {
      * @param id the coded value
      * @return enum value of the packet type
      */
-    public static AjpPacket valueOf(final int id) {
+    public static AjpPacketType valueOf(final int id) {
         if (id < 2 || id > PACKETS.length) {
-            return DATA;
+            throw new IllegalArgumentException();
         }
         return PACKETS[id - 1];
     }
@@ -66,7 +66,7 @@ public enum AjpPacket {
      * @param id code value
      * @param isWebServerPacket <code>true</code> if it is web server packet <code>false</code> if it is servlet container packet
      */
-    AjpPacket(final String description, final int id, final boolean isWebServerPacket) {
+    AjpPacketType(final String description, final int id, final boolean isWebServerPacket) {
         this.description = description;
         this.id = id;
         this.isWebServerPacket = isWebServerPacket;
