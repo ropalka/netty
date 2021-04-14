@@ -27,8 +27,10 @@ public final class AjpPacketDecoder {
     private static final int AJP_PACKET_HEADER_LENGTH_OFFSET  = 2;
     private static final int AJP_PACKET_HEADER_SIZE = 4;
 
-    private volatile State state; // TODO: question is if this class is used by multiple threads or not?
-    private volatile int length; // TODO: question is if this class is used by multiple threads or not?
+    private final AjpPacketDecoderDelegate delegate;
+
+    private State state = State.READ_PACKET_HEADER;
+    private int length;
 
     private enum State {
         READ_PACKET_HEADER,
@@ -36,16 +38,16 @@ public final class AjpPacketDecoder {
         READ_FORWARD_REQUEST_BODY,
     }
 
-    public AjpPacketDecoder() {
-        state = State.READ_PACKET_HEADER;
+    public AjpPacketDecoder(final AjpPacketDecoderDelegate delegate) {
+        this.delegate = delegate;
     }
 
-    public AjpPacket decode(final ByteBuf buffer) {
+    public void decode(final ByteBuf buffer) {
         while (true) {
             switch (state) {
             case READ_PACKET_HEADER: {
                 if (buffer.readableBytes() < AJP_PACKET_HEADER_SIZE) {
-                    return null;
+                    return;
                 }
                 final int packetOffset = buffer.readerIndex();
                 final int markOffset = packetOffset + AJP_PACKET_HEADER_MARK_OFFSET;
@@ -54,22 +56,26 @@ public final class AjpPacketDecoder {
 
                 final int mark = readUnsignedShort(buffer, markOffset);
                 if (mark != AjpPacketUtils.WEB_SERVER_to_SERVLET_CONTAINER_message_mark) {
-                    return null; // TODO: report error
+                    delegate.readPacketError("AJP packet error - invalid header magic");
                 }
                 length = readUnsignedShort(buffer, lengthOffset);
                 if (length > AjpPacketUtils.MAX_PACKET_SIZE) {
-                    return null; // TODO: report error
+                    delegate.readPacketError("AJP packet error - packet too big");
                 }
                 if (length == 0) {
-                    return null; // ignore zero length packets
+                    return; // ignore zero length packets
                 }
                 state = State.READ_PACKET_CONTENT;
             } break;
             case READ_PACKET_CONTENT: {
                 if (buffer.readableBytes() < length) {
-                    return null;
+                    return;
                 }
-                // TODO: here we know the whole packet body size - read whole packet instead
+                //////////////////////
+                //////////////////////
+                // TODO: here we know the whole packet body size - read whole packet content instead
+                //////////////////////
+                //////////////////////
                 final int packetTypeByte = buffer.readByte();
                 final AjpPacketType packetType = AjpPacketType.valueOf(packetTypeByte); // TODO: handle potential exception
                 if (packetType == AjpPacketType.CPING) {
