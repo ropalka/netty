@@ -71,12 +71,10 @@ public final class AjpPacketDecoder {
                 if (buffer.readableBytes() < length) {
                     return;
                 }
-                //////////////////////
-                //////////////////////
-                // TODO: here we know the whole packet body size - read whole packet content instead
-                //////////////////////
-                //////////////////////
+                // read packet type
                 final int packetTypeByte = buffer.readByte();
+                length--;
+                // start processing packet type
                 final AjpPacketType packetType = AjpPacketType.valueOf(packetTypeByte);
                 if (packetType == AjpPacketType.CPING) {
                     state = State.READ_PACKET_HEADER;
@@ -84,12 +82,16 @@ public final class AjpPacketDecoder {
                 }
                 if (packetType != AjpPacketType.FORWARD_REQUEST) {
                     state = State.READ_PACKET_HEADER;
+                    buffer.readBytes(length);
                     delegate.readPacketError("AJP packet error - unexpected packet type " + packetType);
                 }
                 state = State.READ_FORWARD_REQUEST_BODY;
             } break;
             case READ_FORWARD_REQUEST_BODY: {
-                // TODO: process FORWARD_REQUEST body
+                final ByteBuf forwardRequestBytes = buffer.readBytes(length);
+                // TODO: create AjpForwardRequestPacket.of(forwardRequestBytes)
+                // TODO: implementation will create HTTP Method instances
+                // TODO: implementation will create HTTP headers instances
             }
             }
         }
