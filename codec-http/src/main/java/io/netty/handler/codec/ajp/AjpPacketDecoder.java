@@ -77,14 +77,14 @@ public final class AjpPacketDecoder {
                 //////////////////////
                 //////////////////////
                 final int packetTypeByte = buffer.readByte();
-                final AjpPacketType packetType = AjpPacketType.valueOf(packetTypeByte); // TODO: handle potential exception
+                final AjpPacketType packetType = AjpPacketType.valueOf(packetTypeByte);
                 if (packetType == AjpPacketType.CPING) {
                     state = State.READ_PACKET_HEADER;
-                    return AjpCPingPacket.INSTANCE;
+                    delegate.readPingPacket();
                 }
                 if (packetType != AjpPacketType.FORWARD_REQUEST) {
                     state = State.READ_PACKET_HEADER;
-                    return null; // TODO: report error
+                    delegate.readPacketError("AJP packet error - unexpected packet type " + packetType);
                 }
                 state = State.READ_FORWARD_REQUEST_BODY;
             } break;

@@ -23,4 +23,8 @@ public interface AjpPacketDecoderDelegate {
      * Called when an unrecoverable session error has occurred.
      */
     void readPacketError(String message);
+    /**
+     * Called when a PING packet is received.
+     */
+    void readPingPacket();
 }

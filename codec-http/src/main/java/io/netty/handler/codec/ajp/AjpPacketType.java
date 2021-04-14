@@ -55,7 +55,7 @@ public enum AjpPacketType {
      */
     public static AjpPacketType valueOf(final int id) {
         if (id < 2 || id > PACKETS.length) {
-            throw new IllegalArgumentException();
+            return null;
         }
         return PACKETS[id - 1];
     }
